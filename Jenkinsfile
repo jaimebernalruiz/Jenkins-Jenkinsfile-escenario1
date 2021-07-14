@@ -3,14 +3,18 @@ pipeline {
     stages {
         stage ('Getting Dockerfile and building') {
             steps {
-                sh 'docker build -t apictbk/alpineapic:1.0.0 git.tools.tbk.cl/projects/APITBK/repos/api-emisor-cobroqr/Dockerfile'
+                sh 'docker build -t squiroga/tbkapic:0.0.1 https://github.com/SebasQuirogaUCP/Docker-Dockerfile-Escenario1.git'
+                echo 'Dockerfile (con instruacciones para clonar Repo con fuente de Golang listo)'
+                echo 'Imagen Creada OK'
                 }
             }
              
-        stage (' Uploading Image to Artifactory'){
+        stage (' Uploading Image to Dockerhub'){
             steps {
-                sh ' docker image tag apictbk/alpineapic:1.0.0 artifactory.tools.tbk.cl:5000/apicrepo/apictbk/alpineapic:1.0.0 '
-                sh ' docker image push artifactory.tools.tbk.cl:5000/apicrepo/apictbk/alpineapic:1.0.0 '
+                sh ' docker login -u squiroga -p Tbk.2021.'
+                echo 'Docker login OK'
+                sh ' docker image push squiroga/tbkapic:0.0.1 '
+                echo 'Docker image subida a DockerHub'
                  
                 }
             }
@@ -25,4 +29,3 @@ pipeline {
     }
      
 }
-
